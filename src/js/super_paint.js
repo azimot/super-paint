@@ -13,5 +13,3 @@ canvasManager.onHoverColorChanged(function (hex) {
     document.getElementById('colorHolder').style.background = hex;
     document.getElementById('colorHolder').innerText = hex;
 });
-
-console.log('a222222222223zxczxc4ccccccwqeqweqweccc222');

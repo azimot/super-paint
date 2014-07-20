@@ -34,21 +34,26 @@ CanvasManager.prototype._addEventHandlers = function () {
     var self = this,
         mousedown = 0;
 
-    this._node.on('mousedown', function () {
+    this._node.on('mousedown', function (e) {
         mousedown++;
+        calcHoverColor(e);
     });
     this._node.on('mouseup', function () {
         mousedown--;
     });
 
-    this._node.on('mousemove', function (e) {
-        if (!mousedown) return;
+    function calcHoverColor(e) {
         var c = self._node.getContext('2d'),
             x = e.offsetX || e.layerX,
             y = e.offsetY || e.layerY,
             p = c.getImageData(x, y, 1, 1).data,
             hex = "#" + ("000000" + Utils.rgbToHex(p[0], p[1], p[2])).slice(-6);
         self._onHoverColorChanged && self._onHoverColorChanged(hex);
+    }
+
+    this._node.on('mousemove', function (e) {
+        if (!mousedown) return;
+        calcHoverColor(e);
     });
 };
 

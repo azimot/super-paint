@@ -59,6 +59,25 @@ var define, requireModule;
   };
 })();
 
+    define("super_paint",
+        ["HTMLUtils","FileManager","CanvasManager"],
+        function(__dependency1__, __dependency2__, __dependency3__) {
+            "use strict";
+            var FileManager = __dependency2__.FileManager;
+            var CanvasManager = __dependency3__.CanvasManager;
+
+            var fileManager = new FileManager(document.getElementById('file_opener'));
+            var canvasManager = new CanvasManager(document.getElementById('canvas'));
+
+            fileManager.onFileSelected(function (dataURL) {
+                canvasManager.setDataURL(dataURL);
+            });
+
+            canvasManager.onHoverColorChanged(function (hex) {
+                document.getElementById('colorHolder').style.background = hex;
+                document.getElementById('colorHolder').innerText = hex;
+            });
+        });
 define("CanvasManager", 
   ["Utils","exports"],
   function(__dependency1__, __exports__) {
@@ -332,25 +351,6 @@ define("Utils",
     };
 
     __exports__.Utils = Utils;
-  });
-define("super_paint", 
-  ["HTMLUtils","FileManager","CanvasManager"],
-  function(__dependency1__, __dependency2__, __dependency3__) {
-    "use strict";
-    var FileManager = __dependency2__.FileManager;
-    var CanvasManager = __dependency3__.CanvasManager;
-
-    var fileManager = new FileManager(document.getElementById('file_opener'));
-    var canvasManager = new CanvasManager(document.getElementById('canvas'));
-
-    fileManager.onFileSelected(function (dataURL) {
-        canvasManager.setDataURL(dataURL);
-    });
-
-    canvasManager.onHoverColorChanged(function (hex) {
-        document.getElementById('colorHolder').style.background = hex;
-        document.getElementById('colorHolder').innerText = hex;
-    });
   });
 window.SuperPaint = requireModule("super_paint");
 })(window);
